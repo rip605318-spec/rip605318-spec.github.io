@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Cynthia 💘</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    height: 100vh;
+    font-family: 'Arial', sans-serif;
+    background: radial-gradient(circle at top, #ffb6c1, #ff5f9e);
+    overflow: hidden;
+    color: white;
+    text-align: center;
+  }
+
+  #screen {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  h1 { font-size: 2.6rem; margin-bottom: 20px; }
+  p  { font-size: 1.2rem; max-width: 80%; }
+
+  button {
+    padding: 15px 35px;
+    font-size: 1.2rem;
+    border-radius: 14px;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  #yes {
+    background: #ff2d6f;
+    color: white;
+    margin: 20px;
+  }
+
+  #no {
+    background: white;
+    color: #ff2d6f;
+    position: absolute;
+  }
+
+  .heart {
+    position: absolute;
+    font-size: 2rem;
+    animation: float 4s linear infinite;
+  }
+
+  @keyframes float {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(-400px); opacity: 0; }
+  }
+
+  #startBtn {
+    background: white;
+    color: #ff2d6f;
+    font-size: 1.3rem;
+  }
+</style>
+</head>
+
+<body>
+
+<div id="screen">
+  <h1>Hey Cynthia 💗</h1>
+  <p>Before we begin…<br>tap the button 👀</p>
+  <button id="startBtn">Start 💖</button>
+</div>
+
+<audio id="music">
+  <!-- PUT YOUR MP3 FILE NAME HERE -->
+  <source src="narien.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const screen = document.getElementById("screen");
+const music  = document.getElementById("music");
+let noCount = 0;
+
+document.getElementById("startBtn").onclick = () => {
+  screen.innerHTML = `
+    <h1>Cynthia, will you be my Valentine? 💘</h1>
+    <button id="yes">Yes 💕</button>
+    <button id="no">No 😈</button>
+  `;
+
+  const yes = document.getElementById("yes");
+  const no  = document.getElementById("no");
+
+  yes.onclick = yesClicked;
+  no.onmouseover = noEvil;
+};
+
+function noEvil() {
+  noCount++;
+
+  const no = document.getElementById("no");
+  const x = Math.random() * (window.innerWidth - 120);
+  const y = Math.random() * (window.innerHeight - 80);
+  no.style.left = x + "px";
+  no.style.top  = y + "px";
+
+  const texts = [
+    "No 😅",
+    "Are you sure? 🤨",
+    "Try again 😜",
+    "Missed me 😏",
+    "This is getting awkward 😬",
+    "Still no?? 😭",
+    "Cynthia… why 😔",
+    "Okay that hurt 💔",
+    "Last chance 😈",
+    "You’re testing me 😐",
+    "I will NOT accept this 😡",
+    "NO is disabled 💀"
+  ];
+  no.textContent = texts[Math.min(noCount, texts.length - 1)];
+
+  // evil popups after a while
+  if (noCount > 6 && noCount % 2 === 0) {
+    fakeAlert();
+  }
+
+  // screen shake
+  if (noCount > 9) {
+    document.body.style.background =
+      `radial-gradient(circle, #ff2d6f, black)`;
+  }
+}
+
+function fakeAlert() {
+  const div = document.createElement("div");
+  div.style.position = "fixed";
+  div.style.top = Math.random()*80 + "%";
+  div.style.left = Math.random()*80 + "%";
+  div.style.background = "white";
+  div.style.color = "#ff2d6f";
+  div.style.padding = "10px 20px";
+  div.style.borderRadius = "10px";
+  div.style.fontWeight = "bold";
+  div.textContent = "❌ WRONG ANSWER";
+  document.body.appendChild(div);
+
+  setTimeout(() => div.remove(), 1200);
+}
+
+function yesClicked() {
